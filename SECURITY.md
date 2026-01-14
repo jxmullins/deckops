@@ -97,9 +97,10 @@ DeckOps does not currently include built-in authentication. You **MUST** impleme
 ```bash
 # Option 1: Use Docker socket proxy (RECOMMENDED)
 # Limit API access using tecnativa/docker-socket-proxy
+# Note: Only expose on localhost or in trusted networks (port 2375 is unencrypted)
 docker run -d \
   -v /var/run/docker.sock:/var/run/docker.sock \
-  -p 2375:2375 \
+  -p 127.0.0.1:2375:2375 \
   -e CONTAINERS=1 \
   -e SERVICES=1 \
   -e TASKS=1 \
@@ -172,7 +173,7 @@ We are actively working on improving DeckOps security:
 
 We regularly monitor our dependencies for known vulnerabilities:
 
-- Go dependencies: Using `go mod` and scanning with `govulncheck`
+- Go dependencies: Using `go mod` and scanning with `govulncheck` / `go list -m -vuln`
 - npm dependencies: Using `npm audit` for frontend packages
 - Base container images: Regularly updated to latest secure versions
 
